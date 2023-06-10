@@ -1,0 +1,19 @@
+1. Paginação ficou como tarefa extra, link com tutorial para usar:
+https://www.youtube.com/watch?v=VZ5yPs_KEME
+
+
+2. Biblioteca para acessibilidade da div de modal/dialog acessível (aquele efeito de aparecer algo na frente da tela e o resto escurecer para trás desse algo, pode ser um form, enquanto isso). Além disso, seguem todas as regras de ACESSIBILIDADE:
+
+Radix: https://www.radix-ui.com/docs/primitives/components/dialog
+
+npm install @radix-ui/react-dialog
+
+Depois a gente usa o modal na forma de um contexto que envolve o botão ou parte que vai ativá-lo (Olhar em Header como fica, também há documentação no link acima do componente)
+
+Nas referências, vemos o uso do TRIGGER com a propriedade asChild
+
+Já o PORTAL leva para outro local da DOM. Isso porque o botão está no HEADER, mas o modal não tem nada a ver. Dentro do PORTAL, usamos a OVERLAY (camada escurinha que cobre o resto da página)
+
+Para finalizar, dentro desse portal e depois da OVERLAY vai o Content e o Title (acessibilidade)
+
+Agora cabe a nós estilizar tudo.
