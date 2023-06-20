@@ -17,3 +17,27 @@ Já o PORTAL leva para outro local da DOM. Isso porque o botão está no HEADER,
 Para finalizar, dentro desse portal e depois da OVERLAY vai o Content e o Title (acessibilidade)
 
 Agora cabe a nós estilizar tudo.
+
+Utilizamos também construção de botões estilo Radio para o modal, um radio button acessível:
+
+https://www.radix-ui.com/docs/primitives/components/radio-group
+
+
+3. CONFIGURAÇÃO DE API (principal desse módulo 3) - JSON SERVER, instalar como dependência de Desenvolvimento (-D)
+
+https://github.com/typicode/json-server
+
+npm i json-server -D
+
+para executar e com porta configurada em caso da 3000 estar ocupada (-w para "vigiar" mudanças e -d 500 para adicionar um delay de 500ms para todas as requisições):
+
+npx json-server server.json -p 3333 -w -d 500
+
+para SIMPLIFICAR: adicionamos no package um script chamado "dev:server" esse comando sem o npx
+
+PASSAR DATA CERTINHA NO ARUIVO JSON:
+
+new Date().toISOString() no console do navegador para ter a string tipo:
+2023-06-20T20:03:02.883Z
+
+ATENÇÃO! A API do json-server possui várias maneiras de buscar e filtrar dados pela URL. Vale conferir pela documentação quando necessário.
