@@ -3,12 +3,12 @@ import * as Dialog from '@radix-ui/react-dialog';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 export const Overlay = styled(Dialog.Overlay)`
-  position: fixed;
+  position: fixed; // mesmo posição independente de scroll
   width: 100vw;
   height: 100vh; // esses 100 para ocupar a tela toda
   inset: 0; // = top/bottom/left/right: 0
   background: rgba(0, 0, 0, 0.75); // ou #00000075
-`;
+`; // Overlay escurece o resto da tela em torno do modal.
 
 export const Content = styled(Dialog.Content)`
   min-width: 32rem;
@@ -17,7 +17,7 @@ export const Content = styled(Dialog.Content)`
   background: ${(props) => props.theme['gray-800']};
 
   position: fixed;
-  // Para centralizar coisas na tela:
+  // Para CENTRALIZAÇÃO DE ELEMENTOS na tela:
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -66,7 +66,7 @@ export const CloseButton = styled(Dialog.Close)`
   border: 0;
   top: 1.5rem;
   right: 1.5rem;
-  line-height: 0; // ou font-size, a ideia é diminuir a altura pra caixinha de focus do X ficar quadrada
+  line-height: 0; // Ou font-size, a ideia é diminuir a altura pra caixinha de focus do X ficar quadrada. O focus é relativo ao font-size.
   cursor: pointer;
   color: ${props => props.theme['gray-500']};
 `;
