@@ -35,7 +35,7 @@ export const Content = styled(Dialog.Content)`
       background: ${(props) => props.theme['gray-900']};
       color: ${(props) => props.theme['gray-300']};
       padding: 1rem;
-      
+
       &::placeholder {
         color: ${(props) => props.theme['gray-500']};
       }
@@ -51,8 +51,13 @@ export const Content = styled(Dialog.Content)`
       border-radius: 6px;
       margin-top: 1.5rem;
       cursor: pointer;
-      
-      &:hover {
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):hover {
         background: ${(props) => props.theme['green-700']};
         transition: background-color 0.2;
       }
@@ -68,7 +73,7 @@ export const CloseButton = styled(Dialog.Close)`
   right: 1.5rem;
   line-height: 0; // Ou font-size, a ideia é diminuir a altura pra caixinha de focus do X ficar quadrada. O focus é relativo ao font-size.
   cursor: pointer;
-  color: ${props => props.theme['gray-500']};
+  color: ${(props) => props.theme['gray-500']};
 `;
 
 export const TransactionType = styled(RadioGroup.Root)`
@@ -82,8 +87,10 @@ interface TransactionTypeButtonProps {
   variant: 'income' | 'outcome';
 }
 
-export const TransactionTypeButton = styled(RadioGroup.Item)<TransactionTypeButtonProps>`
-  background: ${props => props.theme['gray-700']};
+export const TransactionTypeButton = styled(
+  RadioGroup.Item
+)<TransactionTypeButtonProps>`
+  background: ${(props) => props.theme['gray-700']};
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -92,23 +99,29 @@ export const TransactionTypeButton = styled(RadioGroup.Item)<TransactionTypeButt
   border-radius: 6px;
   cursor: pointer;
   border: 0;
-  color: ${props => props.theme['gray-300']};
+  color: ${(props) => props.theme['gray-300']};
 
   svg {
-    color: ${props => props.variant === 'income' ? props.theme['green-300'] : props.theme['red-300']};
+    color: ${(props) =>
+      props.variant === 'income'
+        ? props.theme['green-300']
+        : props.theme['red-300']};
   }
 
   &[data-state='unchecked']:hover {
     transition: background-color 0.2s;
-    background: ${props => props.theme['gray-600']};
+    background: ${(props) => props.theme['gray-600']};
   }
 
   &[data-state='checked'] {
-    color: ${props => props.theme.white};
-    background: ${props => props.variant === 'income' ? props.theme['green-500'] : props.theme['red-500']};
-    
+    color: ${(props) => props.theme.white};
+    background: ${(props) =>
+      props.variant === 'income'
+        ? props.theme['green-500']
+        : props.theme['red-500']};
+
     svg {
-      color: ${props => props.theme.white};
+      color: ${(props) => props.theme.white};
     }
   }
 `;

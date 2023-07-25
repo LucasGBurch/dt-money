@@ -29,12 +29,17 @@ export function Transactions() {
                   <td width='50%'>{transaction.description}</td>
                   <td>
                     <PriceHighlight variant={transaction.type}>
-                      {transaction.type === 'outcome' && '- '}
+                      {
+                        transaction.type === 'outcome' &&
+                          '- ' /** &nbsp seria a entidade HTML para mais de um espaço */
+                      }
                       {priceFormatter.format(transaction.price)}
                     </PriceHighlight>
                   </td>
                   <td>{transaction.category}</td>
-                  <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+                  <td>
+                    {dateFormatter.format(new Date(transaction.createdAt))}
+                  </td>
                 </tr>
               );
             })}
