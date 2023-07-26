@@ -41,3 +41,140 @@ new Date().toISOString() no console do navegador para ter a string tipo:
 2023-06-20T20:03:02.883Z
 
 ATENÇÃO! A API do json-server possui várias maneiras de buscar e filtrar dados pela URL. Vale conferir pela documentação quando necessário.
+
+
+PAGINAÇÃO - Anotações para tentar lógica de paginação depois (aulas da trilha antiga):
+
+1) LÓGICA:
+
+const total = array_dos_dados.length (neste caso transactions)
+
+// pg 1 começa do 0; pg 2 começa do per_page etc
+const pageStart = (Number(page) - 1) * Number(per_page);
+const pageEnd = pageStart * Number(per_page);
+
+const users = array_dos_dados.slice(pageStart, pageEnd)
+
+2) COMPONENTE:
+
+a) LÓGICA FUNCIONAL:
+
+// Lógica bem chata de fazer para exibição, do tipo:
+// "1... 4 5 6 ... 20"
+
+Pagination:
+
+interface PaginationProps {
+  totalCountOfRegisters: number;
+  registersPerPage?: number;
+  currentPage?: number;
+  onPageChange: (page: number) => void;
+}
+
+const siblingsCount = 1; // páginas exibidas antes e depois da selecionada
+
+function generatePagesArray(from: number, to: number) {
+  [...new Array(to - from)]
+    .map((_, index) => {
+      return from + index + 1
+    })
+    .filter(page => page > 0) // evita pags negativas
+}
+
+
+/* Ex do que a função fará:
+
+generatePagesArray(2, 5)
+[0, 0, 0] com o map:
+[2 + 0 + 1, 2 + 1 + 1, 2 + 2 + 1]
+[3, 4, 5] as páginas exibidas no fim
+*/
+
+const lastPage = Math.floor(totalCountOfRegisters / registersPerPage); // Arredonda pra cima
+
+const previousPages = currentPage > 1
+  ? generatePagesArray(currentPage - 1 - siblingsCount, currentPage - 1)
+  : []; // Páginas anteriores
+
+  const nextPages = currentPage < lastPage
+  ? generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, lastPage))
+  : []; // Menor nº entre lastPage e currentPage + siblings Count
+
+
+b) RENDERIZAÇÃO EM PAGINAÇÃO:
+
+// Primeira Página (para não mostrar a 1 se ela já estiver na lógica do meio):
+{currentPage > (1 + siblingsCount) && (
+  <>
+    <PaginationItem onPageChange={onPageChange} number={1} />
+    {
+      // se estiver a mais de 2 pags de distância:
+       currentPage > (2 + siblingsCount) && <span>...<span/>
+    }
+  </>
+)}
+
+// As do meio:
+{previousPages.length > 0 && previousPages.map((page) => {
+  return <PaginationItem onPageChange={onPageChange} key={page} number={page} />
+})}
+
+<PaginationItem onPageChange={onPageChange} number={currentPage} isCurrent />
+
+{nextPages.length > 0 && previousPages.map((page) => {
+  return <PaginationItem onPageChange={onPageChange} key={page} number={page} />
+})}
+
+
+// Última página (para não mostrar a last se ela já estiver na lógica do meio):
+{(currentPage + siblingsCount) < lastPage && (
+  <>
+  {
+      // se estiver a mais de 2 pags de distância:
+       (currentPage + 1 siblingsCount) < lastPage && <span>...<span/>
+  }
+  <PaginationItem onPageChange={onPageChange} number={lastPage} />
+  </>
+)}
+
+
+c) RENDERIZAÇÃO EMBAIXO DA LISTAGEM:
+
+// Totais que podem ser para testar os componentes 
+
+<Pagination
+  totalCountOfRegisters={100}
+  currentPage={5}
+  onPageChange={() => {}}
+/>
+
+
+d) TROCANDO DE PÁGINA PRA VALER :
+
+const [page, setPage] = useState(1);
+// DAR UM JEITO DE INSERIR PAGE NA FUNÇÃO QUE BUSCA AS TRANSAÇÕES, envolve um tipo:
+
+interface GetTransactionsResponse {
+  totalCount: number; // length?
+  transactions: Transaction[];
+}
+
+// Talvez tenha problemas com o recarregamento visto no fim da aula de referência https://app.rocketseat.com.br/node/data-fetching-e-cache-local/group/construindo-aplicacao-1/lesson/trocando-de-pagina
+
+<Pagination
+  totalCountOfRegisters={data.totalCount}
+  currentPage={page}
+  onPageChange={setPage}
+/>
+
+// Props do PaginationItem (um button)
+interface PaginationItemProps {
+  pageNumber: number;
+  isCurrent: boolean;
+  onPageChange: (page: number) => void;
+}
+
+No botão:
+onClick={() => onPageChange(pageNumber)}
+
+
