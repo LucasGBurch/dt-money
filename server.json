@@ -55,6 +55,22 @@
       "category": "Alimentação",
       "price": 120,
       "createdAt": "2023-06-20T20:01:02.883Z"
+    },
+    {
+      "description": "Desenvolvimento de App",
+      "price": 9000,
+      "category": "Venda",
+      "type": "income",
+      "createdAt": "2023-07-27T19:43:53.537Z",
+      "id": 8
+    },
+    {
+      "description": "Iogurte Grego",
+      "price": 14,
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2023-07-27T20:07:38.080Z",
+      "id": 9
     }
   ]
 }
