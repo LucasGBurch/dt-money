@@ -47,13 +47,21 @@ PAGINAÇÃO - Anotações para tentar lógica de paginação depois (aulas da tr
 
 1) LÓGICA:
 
-const total = array_dos_dados.length (neste caso transactions)
+get('/transactions', function (schema, request) {
+
+const { page = 1, per_page = 5} = request.queryParams;
+
+const total = schema.all('transactions').length
+// array_dos_dados.length (neste caso transactions)
 
 // pg 1 começa do 0; pg 2 começa do per_page etc
+
 const pageStart = (Number(page) - 1) * Number(per_page);
 const pageEnd = pageStart * Number(per_page);
 
-const users = array_dos_dados.slice(pageStart, pageEnd)
+const pageTransactions = schema.all('user').transactions.slice(pageStart, pageEnd)
+// array_dos_dados.slice(pageStart, pageEnd)
+})
 
 2) COMPONENTE:
 
