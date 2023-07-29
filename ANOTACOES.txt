@@ -186,3 +186,23 @@ No botão:
 onClick={() => onPageChange(pageNumber)}
 
 
+4. PERFORMANCE DE RENDERIZAÇÃO:
+
+Para evitar renderizações desnecessárias, implementamos no commit anterior uma lib que faz um uso de Context diferente, onde declaramos qual função ou variável de contexto será observada naquele componente. A instalação da biblioteca é através desse comando combinado com scheduler:
+
+npm i use-context-selector scheduler
+
+Esse selector evita renderizações a mais, com o objetivo de melhorar a performance a ser testada com o Profile do React-Dev-Tools no navegador. Porém, isso não significa que a performance seja baixa sem isso. Atenção com esse ponto.
+
+
+5) APLICANDO useCallback():
+
+Ele evita que uma função seja recriada em memória, caso nenhuma informação de que a função dependa seja mudada. No caso aplicamos isso no createTransaction. A exemplo do useEffect, possui um array de dependências para especificar as informações que vão justificar a recriação em memória da função.
+
+Agora, o motivo de renderização do Modal não é mais a mudança do Contexto, e sim a renderização do componente pai do Modal. O mesmo vale para o SearchForm, no momento que aplicamos o useCallback nele também
+
+
+6) APLICANDO memo e useMemo:
+
+Não é preciso evitar em todos os casos que o componente filho renderize por causa do componente pai. Mas, caso seja preciso, entre o memo.
+
