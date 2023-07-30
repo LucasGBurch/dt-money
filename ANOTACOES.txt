@@ -202,7 +202,26 @@ Ele evita que uma função seja recriada em memória, caso nenhuma informação 
 Agora, o motivo de renderização do Modal não é mais a mudança do Contexto, e sim a renderização do componente pai do Modal. O mesmo vale para o SearchForm, no momento que aplicamos o useCallback nele também
 
 
-6) APLICANDO memo e useMemo:
+6) APLICANDO memo:
 
-Não é preciso evitar em todos os casos que o componente filho renderize por causa do componente pai. Mas, caso seja preciso, entre o memo.
+Não é preciso evitar em todos os casos que o componente filho renderize por causa do componente pai. Mas, caso seja preciso, entre o memo. Esses casos costumam ser conteúdos de HTML muito grandes. Isso porque às vezes usar um memo pode custar mais fazer a comparação profunda, explicada abaixo, de um HTML pequeno.
 
+a) Motivos para componentes renderizar:
+- Hooks changed (state, context, reducer);
+- Props changed;
+- Parent rerendered (componente pai rerenderizar).
+
+b) Fluxo de renderização (extremamente rápida):
+- React recria o HTML da interface daquele componente;
+- Compara a versão recriada do HTML com a versão anterior;
+- Se mudou algo, ele reescreve o HTML na tela.
+
+O memo, portanto, nada mais é do que um memorizador desse HTML. Ele adiciona um passo antes do Fluxo:
+- Hooks changed? Props changed? (deep comparison);
+- Comparar com a versão anterior dos Hooks e Props;
+- Se mudou algo, ele vai permitir a nova renderização. Senão, ele nem entra no fluxo.
+
+
+7) Aplicando useMemo:
+
+Tem os mesmos princípios do Memo. Só que, em vez de funções, ele se aplica às variáveis. Quando ela é repassada para vários outros componentes, eles podem renderizar novamente. Não temos caso de uso para nenhum deles nesta aplicação. Ainda assim, vou manter o memo de exemplo no SearchForm. Assim como o exemplo do hook useMemo, no hook useSummary.

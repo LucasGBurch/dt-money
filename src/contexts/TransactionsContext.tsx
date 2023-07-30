@@ -66,7 +66,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   // useEffect não pode ser assíncrono, por isso, para evitarmos cascata de .then, precisamos fazer a função assíncrona separada acima (antes foi feita dentro do useEffect, que também funciona)
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [fetchTransactions]);
 
   return (
     <TransactionsContext.Provider
